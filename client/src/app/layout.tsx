@@ -3,6 +3,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
+import {ContextProvider} from '../SocketContext'
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -17,15 +19,17 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
+      <ContextProvider>
       <html lang="en">
         <body className={inter.className}>
           <main className="h-full bg-[#111827] overflow-auto">
-            <div className="mx-auto max-w-screen-xl h-full w-full">
+            <div className="mx-auto h-full w-full">
               {children}
             </div>
           </main>
         </body>
       </html>
+      </ContextProvider>
     </ClerkProvider>
   );
 }

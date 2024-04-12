@@ -11,9 +11,12 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.12",
     "@libsql/client": "^0.6.0",
+    "copy-to-clipboard": "^3.3.3",
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
+    "simple-peer": "^9.11.1",
+    "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.2.2",
     "typewriter-effect": "^2.21.0"
   },
