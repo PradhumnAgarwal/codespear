@@ -15,6 +15,7 @@
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
+    "react-split": "^2.0.14",
     "simple-peer": "^9.11.1",
     "socket.io-client": "^4.7.5",
     "tailwind-merge": "^2.2.2",
