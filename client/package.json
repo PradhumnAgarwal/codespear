@@ -11,6 +11,7 @@
   "dependencies": {
     "@clerk/nextjs": "^4.29.12",
     "@libsql/client": "^0.6.0",
+    "@monaco-editor/react": "^4.6.0",
     "copy-to-clipboard": "^3.3.3",
     "next": "14.1.4",
     "react": "^18",
