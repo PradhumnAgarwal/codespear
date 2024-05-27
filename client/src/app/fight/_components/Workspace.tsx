@@ -2,11 +2,15 @@
 
 import CodeEditor from "./CodeEditor";
 import Split from "react-split";
+import { twoSum } from "@/utils/problems/two-sum";
+import ProblemDescription from "./ProblemDescription";
 
 const Workspace = () => {
   return (
     <Split className="split h-full">
-      <div>Problem Description</div>
+      <div>
+        <ProblemDescription problem={twoSum} />
+      </div>
       <Split direction="vertical">
         <CodeEditor />
         <div>Output</div>
