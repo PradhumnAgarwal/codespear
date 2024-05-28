@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
-import {ContextProvider} from '../SocketContext'
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,17 +19,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <ContextProvider>
       <html lang="en">
         <body className={inter.className}>
           <main className="h-full bg-[#111827] overflow-auto">
             <div className="mx-auto h-full w-full">
+            <Toaster position="bottom-center" />
               {children}
             </div>
           </main>
         </body>
       </html>
-      </ContextProvider>
     </ClerkProvider>
   );
 }
