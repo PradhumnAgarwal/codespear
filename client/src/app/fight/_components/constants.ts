@@ -12,4 +12,5 @@ export const CODE_SNIPPETS = {
   python: `\ndef greet(name):\n\tprint("Hello, " + name + "!")\n\ngreet("Alex")\n`,
   java: `\npublic class HelloWorld {\n\tpublic static void main(String[] args) {\n\t\tSystem.out.println("Hello World");\n\t}\n}\n`,
   php: "<?php\n\n$name = 'Alex';\necho $name;\n",
+  cpp: "#include <iostream>\nusing namespace std;\n\nint main() {\n\t// CODE HERE\n\treturn 0;\n}",
 };
