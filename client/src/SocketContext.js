@@ -6,7 +6,9 @@ import { io } from "socket.io-client";
 import Peer from "simple-peer"
 
 const SocketContext = createContext();
-const socket = io('https://localhost:5000');
+// const socket = io('http://localhost:5000/');
+// const socket = io('https://webrtc-r6gz.onrender.com/');
+const socket = io('https://codespear-1qu9.onrender.com');
 
 const ContextProvider = ({ children }) => {
 
@@ -29,10 +31,11 @@ const ContextProvider = ({ children }) => {
             })
         socket.on('me', (id) => {
             setMe(id);
+            console.log('me');
         })
 
         socket.on('calluser', ({ from, name: callerName, signal }) => {
-            setCall({ isRecivedCall: true, from, name: callerName, signal })
+            setCall({ isReceivingCall: true, from, callerName, signal })
         })
     }, [])
 
@@ -62,15 +65,15 @@ const ContextProvider = ({ children }) => {
 
         peer.on('stream', (currentStream) => {
             userVideo.current.srcObject = currentStream;
-        })
+
+        });
 
         socket.on('callaccepted', (signal) => {
             setCallAccepted(true);
             peer.signal(signal);
-            connectionRef.current = peer;
-
         })
 
+        connectionRef.current = peer;
     }
     const leaveCall = () => {
         setCallEnded(true);
