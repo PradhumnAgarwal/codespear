@@ -1,25 +1,46 @@
 "use client";
 
+import { useState } from "react";
+import LanguageSelector from "./LanguageSelector";
 import { Editor } from "@monaco-editor/react";
+import { CODE_SNIPPETS } from "./constants";
+import { useClerk } from "@clerk/clerk-react";
 
 const CodeEditor = () => {
-  const language = "javascript";
+  const [language, setLanguage] = useState("javascript");
+  const [value, setValue] = useState(CODE_SNIPPETS["javascript"]);
+  const { loaded } = useClerk();
+
+  const onSelect = (language: string) => {
+    setLanguage(language);
+    setValue(CODE_SNIPPETS[language as keyof typeof CODE_SNIPPETS]);
+  };
+
+  const onMount = (editor: any) => {
+    editor.focus();
+  };
 
   return (
     <div className="h-full">
-      <Editor
-        options={{
-          minimap: {
-            enabled: false,
-          },
-        }}
-        theme="vs-dark"
-        language={language}
-        // defaultValue={CODE_SNIPPETS[language]}
-        // onMount={onMount}
-        // value={value}
-        // onChange={(value) => setValue(value)}
-      />
+      <LanguageSelector language={language} onSelect={onSelect} />
+      <div className="h-[calc(100%-40px)]">
+        {loaded ? (
+          <Editor
+            options={{
+              minimap: {
+                enabled: false,
+              },
+            }}
+            theme="vs-dark"
+            language={language}
+            value={value || ""}
+            onMount={onMount}
+            onChange={(value) => setValue(value || "")}
+          />
+        ) : (
+          <div>Loading Editor...</div>
+        )}
+      </div>
     </div>
   );
 };

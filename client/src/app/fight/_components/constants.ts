@@ -4,6 +4,7 @@ export const LANGUAGE_VERSIONS = {
   python: "3.10.0",
   java: "15.0.2",
   php: "8.2.3",
+  cpp: "17",
 };
 
 export const CODE_SNIPPETS = {
