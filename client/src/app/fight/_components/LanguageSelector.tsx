@@ -27,7 +27,7 @@ const LanguageSelector = ({ language, onSelect }: LanguageSelectorProps) => {
         className="flex items-center justify-between space-x-1"
         onClick={handleButtonClick}
       >
-        <span>{language}</span>
+        <span className="text-sm">{language}</span>
         <IoChevronDown />
       </button>
       {isDropdownVisible && (
@@ -38,7 +38,7 @@ const LanguageSelector = ({ language, onSelect }: LanguageSelectorProps) => {
           {Object.keys(LANGUAGE_VERSIONS).map((lang) => (
             <button
               key={lang}
-              className={`block w-full px-2 py-1 text-left hover:bg-gray-600 ${
+              className={`block w-full px-2 py-1 text-left text-sm hover:bg-gray-600 ${
                 lang === language && "text-blue-400"
               }`}
               onClick={() => handleSelect(lang)}
