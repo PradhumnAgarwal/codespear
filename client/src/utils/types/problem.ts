@@ -1,17 +1,19 @@
-export type Example = {
+export type TestCaseType = {
   id: number;
-  inputText: string;
-  outputText: string;
+  input: string;
+  output: string;
   explanation?: string;
+  isHidden?: boolean;
   img?: string;
 };
 
-// local problem data
-export type Problem = {
-  id: string;
+export type ProblemType = {
+  id: number;
   title: string;
+  difficulty: string;
   problemStatement: string;
-  examples: Example[];
+  inputFormat: string;
+  outputFormat: string;
+  testCases: TestCaseType[];
   constraints: string;
-  order: number;
 };

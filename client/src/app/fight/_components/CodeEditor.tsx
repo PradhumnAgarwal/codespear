@@ -7,6 +7,8 @@ import { CODE_SNIPPETS } from "./constants";
 import { useClerk } from "@clerk/clerk-react";
 
 const CodeEditor = () => {
+  // Remaining: reset, fullscreen
+
   const [language, setLanguage] = useState("javascript");
   const [value, setValue] = useState(CODE_SNIPPETS["javascript"]);
   const { loaded } = useClerk();
@@ -38,7 +40,9 @@ const CodeEditor = () => {
             onChange={(value) => setValue(value || "")}
           />
         ) : (
-          <div>Loading Editor...</div>
+          <div className="h-full flex justify-center items-center">
+            Loading Editor...
+          </div>
         )}
       </div>
     </div>

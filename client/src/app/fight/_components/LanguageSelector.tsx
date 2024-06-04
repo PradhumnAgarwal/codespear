@@ -27,7 +27,7 @@ const LanguageSelector = ({ language, onSelect }: LanguageSelectorProps) => {
         className="flex items-center justify-between space-x-1"
         onClick={handleButtonClick}
       >
-        <span className="text-sm">{language}</span>
+        <span className="text-xs">{language}</span>
         <IoChevronDown />
       </button>
       {isDropdownVisible && (
