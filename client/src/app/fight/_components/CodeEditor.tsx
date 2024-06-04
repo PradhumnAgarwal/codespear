@@ -6,16 +6,26 @@ import { Editor } from "@monaco-editor/react";
 import { CODE_SNIPPETS } from "./constants";
 import { useClerk } from "@clerk/clerk-react";
 
-const CodeEditor = () => {
+type CodeEditorProps = {
+  code: string;
+  setCode: (code: string) => void;
+  language: string;
+  setLanguage: (language: string) => void;
+};
+
+const CodeEditor = ({
+  code,
+  setCode,
+  language,
+  setLanguage,
+}: CodeEditorProps) => {
   // Remaining: reset, fullscreen
 
-  const [language, setLanguage] = useState("javascript");
-  const [value, setValue] = useState(CODE_SNIPPETS["javascript"]);
   const { loaded } = useClerk();
 
   const onSelect = (language: string) => {
     setLanguage(language);
-    setValue(CODE_SNIPPETS[language as keyof typeof CODE_SNIPPETS]);
+    setCode(CODE_SNIPPETS[language as keyof typeof CODE_SNIPPETS]);
   };
 
   const onMount = (editor: any) => {
@@ -35,9 +45,9 @@ const CodeEditor = () => {
             }}
             theme="vs-dark"
             language={language}
-            value={value || ""}
+            value={code || ""}
             onMount={onMount}
-            onChange={(value) => setValue(value || "")}
+            onChange={(value) => setCode(value || "")}
           />
         ) : (
           <div className="h-full flex justify-center items-center">
