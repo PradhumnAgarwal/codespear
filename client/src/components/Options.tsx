@@ -1,14 +1,17 @@
 "use client";
 
 import { SocketContext } from "@/SocketContext";
+import { useRouter } from 'next/navigation';
 import React, { useContext, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import toast from "react-hot-toast";
-const Options = ({ children }: { children: React.ReactNode }) => {
-  const { me, name, setName, callUser } =
-    useContext(SocketContext);
 
+
+const Options = ({ children }: { children: React.ReactNode }) => {
+  const { me, name, setName, callUser } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
+
+  const router = useRouter()
 
   return (
     <div className="mt-4">
@@ -49,6 +52,16 @@ const Options = ({ children }: { children: React.ReactNode }) => {
             Call
           </div>
         </div>
+        {/* Do the logic for redirect accordingly */}
+        {/* <div
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center cursor-pointer"
+            onClick={() => {
+              router.push('/fight')
+              toast.success('Clicked')
+            }}
+          >
+            Click me
+          </div> */}
       </div>
 
       {children}
