@@ -21,6 +21,8 @@ const ContextProvider = ({ children }) => {
 
     const myVideo = useRef();
     const userVideo = useRef();
+    const myVideoFight = useRef();
+    const userVideoFight = useRef();
     const connectionRef = useRef();
 
     useEffect(() => {
@@ -32,6 +34,7 @@ const ContextProvider = ({ children }) => {
             .then(stream => {
                 setStream(stream);
                 myVideo.current.srcObject = stream;
+                myVideoFight.current.srcObject = stream;
             })
 
         socket.on('calluser', ({ from, name: callerName, signal }) => {
@@ -65,6 +68,7 @@ const ContextProvider = ({ children }) => {
 
         peer.on('stream', (currentStream) => {
             userVideo.current.srcObject = currentStream;
+            userVideoFight.current.srcObject = currentStream;
 
         });
 
@@ -82,7 +86,7 @@ const ContextProvider = ({ children }) => {
     }
 
     return (
-        <SocketContext.Provider value={{ call, callAccepted, myVideo, userVideo, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall }}>
+        <SocketContext.Provider value={{ call, callAccepted, myVideo,myVideoFight, userVideo, userVideoFight, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall }}>
             {children}
         </SocketContext.Provider>
     )

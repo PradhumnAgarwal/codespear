@@ -1,19 +1,19 @@
 export type TestCaseType = {
-  id: number;
-  input: string;
-  output: string;
-  explanation?: string;
+  tc_id: number;
+  tc_input: string;
+  tc_output: string;
+  tc_explanation?: string;
   isHidden?: boolean;
-  img?: string;
+  image?: string;
 };
 
 export type ProblemType = {
-  id: number;
-  title: string;
+  prob_id: number;
+  prob_title: string;
   difficulty: string;
   problemStatement: string;
   inputFormat: string;
   outputFormat: string;
-  testCases: TestCaseType[];
+  testcases: TestCaseType[];
   constraints: string;
 };

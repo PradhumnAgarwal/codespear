@@ -27,7 +27,7 @@ const Options = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
           <CopyToClipboard text={me}>
-            <div onClick={() =>{toast.success('ID copied!')}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center cursor-pointer">
+            <div style={{cursor: me? 'pointer' : 'not-allowed'}} onClick={() =>{toast.success('ID copied!')}} className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center cursor-pointer">
               Copy Your ID
             </div>
           </CopyToClipboard>

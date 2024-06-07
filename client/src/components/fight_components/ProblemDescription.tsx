@@ -14,7 +14,7 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
           <div className="w-full">
             <div className="flex space-x-4">
               <div className="flex-1 mr-2 text-lg text-white font-medium">
-                {problem?.title}
+                {problem?.prob_title}
               </div>
             </div>
 
@@ -65,31 +65,31 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
 
             {/* Examples */}
             <div className="mt-4">
-              {problem.testCases
+              {problem.testcases
                 .filter((example) => !example.isHidden)
                 .map((example, index) => (
-                  <div key={example.id}>
+                  <div key={example.tc_id}>
                     <p className="font-medium text-white">
                       Example {index + 1}:{" "}
                     </p>
-                    {example.img && (
-                      <img src={example.img} alt="" className="mt-3" />
+                    {example.image && (
+                      <img src={example.image} alt="" className="mt-3" />
                     )}
                     <div className="example-card">
                       <pre>
                         <strong className="text-white">Input: </strong>
                         {"\n"}
-                        {example.input}
+                        {example.tc_input}
                         <br />
                         <br />
                         <strong>Output:</strong>
                         {"\n"}
-                        {example.output}
+                        {example.tc_output}
                         <br />
                         <br />
-                        {example.explanation && (
+                        {example.tc_explanation && (
                           <>
-                            <strong>Explanation:</strong> {example.explanation}
+                            <strong>Explanation:</strong> {example.tc_explanation}
                           </>
                         )}
                       </pre>

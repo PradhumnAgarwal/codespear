@@ -1,6 +1,6 @@
 export const twoSum = {
-  id: 1,
-  title: "Two Sum",
+  prob_id: 1,
+  prob_title: "Twoadfskjk Sum",
   difficulty: "Easy",
   problemStatement: `<p class='mt-3'>
   Given an array of integers <code>nums</code> and an integer <code>target</code>, return
@@ -14,25 +14,25 @@ export const twoSum = {
   inputFormat: `<li>The first line of input contain two integers N as size of the array nums and target.</li>
   <li>The second line of input contain N space separated integers, representing the array nums.</li>`,
   outputFormat: `<li>Return two space separated integers in a non-decreasing manner, representing the indices of the two numbers such that they add up to target.</li>`,
-  testCases: [
+  testcases: [
     {
-      id: 1,
-      input: `4 9\n2 7 11 15`,
-      output: "0 1",
-      explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
+      tc_id: 1,
+      tc_input: `4 9\n2 7 11 15`,
+      tc_output: "0 1",
+      tc_explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
       isHidden: false,
     },
     {
-      id: 2,
-      input: `3 6\n3 2 4`,
-      output: "1 2",
-      explanation: "Because nums[1] + nums[2] == 6, we return [1, 2].",
+      tc_id: 2,
+      tc_input: `3 6\n3 2 4`,
+      tc_output: "1 2",
+      tc_explanation: "Because nums[1] + nums[2] == 6, we return [1, 2].",
       isHidden: false,
     },
     {
-      id: 3,
-      input: `2 6\n3 3`,
-      output: "0 1",
+      tc_id: 3,
+      tc_input: `2 6\n3 3`,
+      tc_output: "0 1",
       isHidden: true,
     },
   ],
