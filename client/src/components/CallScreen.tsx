@@ -52,7 +52,7 @@ const { name, call, userVideo, myVideo} = useContext(SocketContext);
               className="text-3xl text-white text-center"
               style={{ width: "100%" }}
             >
-              {call.callerName}
+              {call.callerName || 'Opponent'}
             </div>
           </div>
         </div>

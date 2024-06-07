@@ -6,25 +6,26 @@ import Interaction from "./fight_components/Interaction";
 
 function ContestScreen() {
   const [problem, setProblem] = useState(twoSum);
-  const [probLength, setProbLength] = useState(10);
+  const [probLength, setProbLength] = useState(1);
   useEffect(() => {
     // console.log('Contest Screen');
     const getProblemID = async () => {
       const data = await fetch(`https://codespear-1qu9.onrender.com/questions`);
       const prob = await data.json();
-      setProbLength(prob.length());
-      console.log(prob.length());
+      setProbLength(prob.length);
+      // console.log(prob.length);
       };
     getProblemID();
-    const n = Math.floor(Math.random() * probLength);
-    console.log(n);
+    let n = Math.floor(Math.random() * probLength);
+    if(n == 0) n++;
+    // console.log(n);
     const createProblem = async () => {
       const data = await fetch(
         `https://codespear-1qu9.onrender.com/ques/${n}`
       );
       const prob = await data.json();
       setProblem(prob);
-      console.log(prob);
+      // console.log(prob);
     };
     createProblem();
   }, []);

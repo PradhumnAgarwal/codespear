@@ -21,21 +21,21 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
             <div className="flex items-center mt-3">
               <div
                 className={`inline-block rounded-[21px] px-2.5 py-1 text-xs font-medium capitalize ${
-                  problem.difficulty == "Easy"
+                  problem?.difficulty == "Easy"
                     ? "bg-green-700"
-                    : problem.difficulty == "Medium"
+                    : problem?.difficulty == "Medium"
                     ? "bg-yellow-600"
                     : "bg-red-800"
                 }`}
               >
-                {problem.difficulty}
+                {problem?.difficulty}
               </div>
             </div>
 
             {/* Problem Statement(paragraphs) */}
             <div className="text-white text-sm">
               <div
-                dangerouslySetInnerHTML={{ __html: problem.problemStatement }}
+                dangerouslySetInnerHTML={{ __html: problem?.problemStatement }}
               />
             </div>
 
@@ -46,7 +46,7 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
               </div>
               <ul className="text-white ml-5 mt-3 list-disc text-sm">
                 <div
-                  dangerouslySetInnerHTML={{ __html: problem.inputFormat }}
+                  dangerouslySetInnerHTML={{ __html: problem?.inputFormat }}
                 />
               </ul>
             </div>
@@ -58,14 +58,14 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
               </div>
               <ul className="text-white ml-5 mt-3 list-disc text-sm">
                 <div
-                  dangerouslySetInnerHTML={{ __html: problem.outputFormat }}
+                  dangerouslySetInnerHTML={{ __html: problem?.outputFormat }}
                 />
               </ul>
             </div>
 
             {/* Examples */}
             <div className="mt-4">
-              {problem.testcases
+              {problem?.testcases
                 .filter((example) => !example.isHidden)
                 .map((example, index) => (
                   <div key={example.tc_id}>
@@ -103,7 +103,7 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
               <div className="text-white text-sm font-medium">Constraints:</div>
               <ul className="text-white ml-5 list-disc ">
                 <div
-                  dangerouslySetInnerHTML={{ __html: problem.constraints }}
+                  dangerouslySetInnerHTML={{ __html: problem?.constraints }}
                 />
               </ul>
             </div>

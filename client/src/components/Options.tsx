@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 
 const Options = ({ children }: { children: React.ReactNode }) => {
-  const { me, name, setName, callUser } = useContext(SocketContext);
+  const { me, name, setName, callUser, callAccepted } = useContext(SocketContext);
   const [idToCall, setIdToCall] = useState("");
 
   const router = useRouter()
@@ -44,6 +44,7 @@ const Options = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center cursor-pointer"
+            style={{ cursor: callAccepted? 'not-allowed' : 'pointer'}}
             onClick={() => {
               callUser(idToCall)
               toast.success('Call Initiated')

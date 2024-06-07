@@ -18,12 +18,12 @@ const TestCases = ({ problem }: { problem: ProblemType }) => {
       </div>
 
       <div className="flex">
-        {problem.testcases
+        {problem?.testcases
           .filter((example) => !example.isHidden)
           .map((example, index) => (
             <div
               className="mr-3 items-start mt-2 "
-              key={example.id}
+              key={example.tc_id}
               onClick={() => setActiveTestCaseId(index)}
             >
               <div className="flex flex-wrap items-center">
@@ -42,11 +42,11 @@ const TestCases = ({ problem }: { problem: ProblemType }) => {
       <div className="font-semibold my-4">
         <p className="text-sm font-medium mt-4 text-white">Input:</p>
         <div className="w-full cursor-text rounded-[0.4rem] border px-3 py-2 bg-dark-fill-3 border-transparent text-white mt-2">
-          <pre>{problem.testcases[activeTestCaseId].input}</pre>
+          <pre>{problem?.testcases[activeTestCaseId].tc_input}</pre>
         </div>
         <p className="text-sm font-medium mt-4 text-white">Expected Output:</p>
         <div className="w-full cursor-text rounded-[0.4rem] border px-3 py-2 bg-dark-fill-3 border-transparent text-white mt-2">
-          <pre>{problem.testcases[activeTestCaseId].output}</pre>
+          <pre>{problem?.testcases[activeTestCaseId].tc_output}</pre>
         </div>
       </div>
     </div>

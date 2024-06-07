@@ -11,7 +11,7 @@ export default function Home() {
   const { callAccepted } = useContext(SocketContext);
   const [isContest, setIsContest] = useState(false);
   useEffect(() => {
-    console.log(callAccepted);
+    // console.log(callAccepted);
     setTimeout(() => {
       if (callAccepted) setIsContest(true);
     }, 5000);

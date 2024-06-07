@@ -28,7 +28,7 @@ const ContextProvider = ({ children }) => {
     useEffect(() => {
         socket.on('me', (id) => {
             setMe(id);
-            console.log('me');
+            // console.log('me');
         })
         navigator.mediaDevices.getUserMedia({ video: true, audio: true })
             .then(stream => {
