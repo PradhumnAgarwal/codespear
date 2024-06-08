@@ -87,6 +87,9 @@ io.on('connection', (socket) => {
     socket.on('answercall', (data) => {
         io.to(data.to).emit("callaccepted", data.signal)
     })
+    socket.on('codeShare', (data) =>{
+        io.to(data.to).emit("codeShare", data.code)
+    })
 })
 
 

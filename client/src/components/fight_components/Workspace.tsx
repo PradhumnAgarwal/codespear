@@ -5,12 +5,19 @@ import Split from "react-split";
 import ProblemDescription from "./ProblemDescription";
 import TestCases from "./TestCases";
 import { CODE_SNIPPETS } from "./constants";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ProblemType } from "@/utils/types/problem";
+import { SocketContext } from "@/SocketContext";
 
 const Workspace = ({ problem }: { problem: ProblemType }) => {
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
   const [language, setLanguage] = useState("javascript");
+  const { codeShare } = useContext(SocketContext);
+
+  useEffect(() => {
+    codeShare(code);
+    console.log('code');
+  }, [code]);
 
   const onSubmit = () => {};
 

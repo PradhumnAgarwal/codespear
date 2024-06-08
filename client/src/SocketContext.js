@@ -40,6 +40,10 @@ const ContextProvider = ({ children }) => {
         socket.on('calluser', ({ from, name: callerName, signal }) => {
             setCall({ isReceivingCall: true, from, callerName, signal })
         })
+        socket.on('codeShare', (code) => {
+            console.log('code shared');
+            console.log(code);
+        })
     }, [])
 
     const answerCall = () => {
@@ -58,6 +62,9 @@ const ContextProvider = ({ children }) => {
         peer.signal(call.signal);
 
         connectionRef.current = peer;
+    }
+    const codeShare = (code) => {
+        socket.emit('codeShare', {code, to: call.from});
     }
     const callUser = (id) => {
         const peer = new Peer({ initiator: true, trickle: false, stream })
@@ -86,7 +93,7 @@ const ContextProvider = ({ children }) => {
     }
 
     return (
-        <SocketContext.Provider value={{ call, callAccepted, myVideo,myVideoFight, userVideo, userVideoFight, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall }}>
+        <SocketContext.Provider value={{ call, callAccepted, myVideo,myVideoFight, userVideo, userVideoFight, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall, codeShare }}>
             {children}
         </SocketContext.Provider>
     )
