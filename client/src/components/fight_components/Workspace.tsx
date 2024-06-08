@@ -12,11 +12,11 @@ import { SocketContext } from "@/SocketContext";
 const Workspace = ({ problem }: { problem: ProblemType }) => {
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
   const [language, setLanguage] = useState("javascript");
-  const { codeShare } = useContext(SocketContext);
+  const { codeShare, oppCode } = useContext(SocketContext);
 
   useEffect(() => {
     codeShare(code);
-    console.log('code');
+    console.log(oppCode);
   }, [code]);
 
   const onSubmit = () => {};

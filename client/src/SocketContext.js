@@ -10,12 +10,30 @@ const SocketContext = createContext();
 // const socket = io('https://webrtc-r6gz.onrender.com/');
 const socket = io('https://codespear-1qu9.onrender.com');
 
+function cypher(str) {
+    var all_chars = str.split("");
+    for(var i = 0; i < all_chars.length; i++) {
+        var char = all_chars[i];
+        if (char >= 'a' && char <= 'z') {
+            var n = char.charCodeAt() - 'a'.charCodeAt();
+            n = (n + 1) % 26;
+            all_chars[i] = String.fromCharCode(n + 'a'.charCodeAt());
+        } else if (char >= 'A' && char <= 'Z') {
+            var n = char.charCodeAt() - 'A'.charCodeAt();
+            n = (n + 1) % 26;
+            all_chars[i] = String.fromCharCode(n + 'A'.charCodeAt());
+        }
+    }
+    return all_chars.join("");
+}
+
 const ContextProvider = ({ children }) => {
 
     const [stream, setStream] = useState(null)
     const [me, setMe] = useState('')
     const [call, setCall] = useState({})
     const [name, setName] = useState('')
+    const [oppCode, setOppCode] = useState('')
     const [callEnded, setCallEnded] = useState(false)
     const [callAccepted, setCallAccepted] = useState(false)
 
@@ -41,8 +59,11 @@ const ContextProvider = ({ children }) => {
             setCall({ isReceivingCall: true, from, callerName, signal })
         })
         socket.on('codeShare', (code) => {
-            console.log('code shared');
-            console.log(code);
+           
+
+
+            setOppCode(cypher(code));
+            // console.log(code);
         })
     }, [])
 
@@ -65,6 +86,7 @@ const ContextProvider = ({ children }) => {
     }
     const codeShare = (code) => {
         socket.emit('codeShare', {code, to: call.from});
+        // console.log(code);
     }
     const callUser = (id) => {
         const peer = new Peer({ initiator: true, trickle: false, stream })
@@ -93,7 +115,7 @@ const ContextProvider = ({ children }) => {
     }
 
     return (
-        <SocketContext.Provider value={{ call, callAccepted, myVideo,myVideoFight, userVideo, userVideoFight, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall, codeShare }}>
+        <SocketContext.Provider value={{ call, callAccepted, myVideo,myVideoFight, userVideo, userVideoFight, stream, name, setName, callEnded, me, callUser, leaveCall, answerCall, codeShare, oppCode }}>
             {children}
         </SocketContext.Provider>
     )
