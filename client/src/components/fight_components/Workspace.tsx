@@ -4,22 +4,155 @@ import CodeEditor from "./CodeEditor";
 import Split from "react-split";
 import ProblemDescription from "./ProblemDescription";
 import TestCases from "./TestCases";
-import { CODE_SNIPPETS } from "./constants";
+import { CODE_SNIPPETS, LANGUAGE_VERSIONS } from "./constants";
 import { useContext, useEffect, useState } from "react";
 import { ProblemType } from "@/utils/types/problem";
 import { SocketContext } from "@/SocketContext";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+//confetti
+import Confetti from "react-confetti";
+import test from "node:test";
+
+// import { url } from "inspector";
 
 const Workspace = ({ problem }: { problem: ProblemType }) => {
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
-  const [language, setLanguage] = useState("javascript");
+  const [language, setLanguage] = useState<string>("javascript");
   const { codeShare, oppCode } = useContext(SocketContext);
+  const [executing, setExecuting] = useState<boolean>(false);
+  const [results, setResults] = useState<
+    { id: number; status: string; verdict: boolean }[]
+  >([]);
+  const [confetti, setConfetti] = useState<boolean>(false);
 
   useEffect(() => {
     codeShare(code);
-    console.log(oppCode);
+    // console.log(oppCode);
   }, [code]);
 
-  const onSubmit = () => {};
+  const execution = async ({
+    CODE,
+    input,
+    output,
+  }: {
+    CODE: string;
+    input: string;
+    output: string;
+  }) => {
+    try {
+      const response = await axios.post("/api/execute", {
+        language: language,
+        version: LANGUAGE_VERSIONS[language as keyof typeof LANGUAGE_VERSIONS],
+        code: CODE,
+        input: input,
+      });
+
+      // compilation error
+      if (response.data.compile.stderr) {
+        return {
+          status: "compilation error",
+          verdict: false,
+        };
+      }
+
+      // runtime error
+      if (response.data.run.stderr) {
+        return {
+          status: "runtime error",
+          verdict: false,
+        };
+      }
+
+      // limit exceeded
+      if (response.data.run.signal === "SIGKILL") {
+        return {
+          status: "limit exceeded",
+          verdict: false,
+        };
+      }
+
+      if (response.data.run.stdout === output) {
+        return {
+          status: "correct",
+          verdict: true,
+        };
+      }
+
+      return {
+        status: "wrong answer",
+        verdict: false,
+      };
+    } catch (err) {
+      toast.error("Too many requests");
+      return {
+        status: "too many requests",
+        verdict: false,
+      };
+    }
+  };
+
+  const onRun = async () => {
+    setExecuting(true);
+    const newResults: { id: number; status: string; verdict: boolean }[] = [];
+    const CODE = code;
+
+    for (const testcase of problem.testcases.filter(
+      (testcase) => !testcase.isHidden
+    )) {
+      const result = await execution({
+        CODE: CODE,
+        input: testcase.tc_input,
+        output: testcase.tc_output,
+      });
+
+      newResults.push({ id: testcase.tc_id, ...result });
+
+      if (result.verdict === false) break;
+    }
+
+    setResults(newResults);
+    setExecuting(false);
+  };
+
+  const onSubmit = async () => {
+    // other user need to be notified
+
+    setExecuting(true);
+
+    const submitResults: { id: number; status: string; verdict: boolean }[] =
+      [];
+    const CODE = code;
+
+    for (const testcase of problem.testcases) {
+      const result = await execution({
+        CODE: CODE,
+        input: testcase.tc_input,
+        output: testcase.tc_output,
+      });
+
+      submitResults.push({ id: testcase.tc_id, ...result });
+
+      if (result.verdict === false) break;
+    }
+
+    setExecuting(false);
+
+    const verdict =
+      submitResults.every((result) => result.verdict === true) &&
+      submitResults.length === problem.testcases.length;
+
+    if (verdict) {
+      toast.success("All test cases passed!", { position: "top-center" });
+      setConfetti(true);
+      setTimeout(() => {
+        setConfetti(false);
+      }, 5000);
+    } else {
+      toast.error("Some test cases failed", { position: "top-center" });
+    }
+  };
 
   return (
     <div className="h-full w-full flex" style={{ maxHeight: "100vh" }}>
@@ -43,18 +176,33 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
             <TestCases problem={problem} />
           </Split>
           <div className="h-[50px] mx-20 bg-gray-900 text-white flex items-center justify-center border-t space-x-4">
-            <button className="font-medium items-center focus:outline-none inline-flex bg-dark-fill-3 relative rounded-[0.5rem] px-4 py-1 cursor-pointer whitespace-nowrap text-white">
+            <button
+              className={`font-medium items-center focus:outline-none inline-flex relative rounded-[0.5rem] px-4 py-1 whitespace-nowrap ${
+                executing
+                  ? "text-gray-400 cursor-not-allowed bg-gray-800"
+                  : "bg-dark-fill-3"
+              }`}
+              onClick={onRun}
+              disabled={executing}
+            >
               Run
             </button>
             <button
-              className="font-medium items-center focus:outline-none inline-flex bg-green-700 relative rounded-[0.5rem] px-4 py-1 cursor-pointer whitespace-nowrap text-white"
+              className={`font-medium items-center focus:outline-none inline-flex bg-green-700 relative rounded-[0.5rem] px-4 py-1 whitespace-nowrap ${
+                executing
+                  ? "text-gray-400 cursor-not-allowed bg-green-900"
+                  : "bg-green-700"
+              }`}
               onClick={onSubmit}
+              disabled={executing}
             >
               Submit
             </button>
           </div>
         </div>
       </Split>
+      <ToastContainer />
+      {confetti && <Confetti />}
     </div>
   );
 };
