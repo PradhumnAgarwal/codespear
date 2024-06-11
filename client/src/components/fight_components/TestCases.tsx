@@ -1,7 +1,16 @@
 import { ProblemType } from "@/utils/types/problem";
 import { useState } from "react";
+import { FaCheckCircle } from "react-icons/fa";
+import { FaCircleExclamation } from "react-icons/fa6";
+import { FaCircleXmark } from "react-icons/fa6";
 
-const TestCases = ({ problem }: { problem: ProblemType }) => {
+const TestCases = ({
+  problem,
+  results,
+}: {
+  problem: ProblemType;
+  results: { id: number; status: string; verdict: boolean }[];
+}) => {
   // Remaining: testcases passed or failed, console output
 
   const [activeTestCaseId, setActiveTestCaseId] = useState<number>(0);
@@ -29,10 +38,26 @@ const TestCases = ({ problem }: { problem: ProblemType }) => {
               <div className="flex flex-wrap items-center">
                 <div
                   className={`font-medium items-center transition-all focus:outline-none inline-flex bg-dark-fill-3 hover:bg-dark-fill-2 relative rounded-[0.5rem] px-4 py-1 cursor-pointer whitespace-nowrap
-										${activeTestCaseId === index ? "text-white" : "text-gray-500"}
+										${
+                      activeTestCaseId === index
+                        ? "text-white"
+                        : "text-gray-500 hover:text-gray-400"
+                    }
 									`}
                 >
                   Case {index + 1}
+                  {results.length > index && results[index].verdict && (
+                    <FaCheckCircle className="absolute bottom-5 right-[-5px] text-green-600" />
+                  )}
+                  {results.length > index &&
+                    results[index].status === "wrong answer" && (
+                      <FaCircleXmark className="absolute bottom-5 right-[-5px] text-red-600" />
+                    )}
+                  {results.length > index &&
+                    results[index].status ===
+                      ("runtime error" || "limit execeeded") && (
+                      <FaCircleExclamation className="absolute bottom-5 right-[-5px] text-yellow-600" />
+                    )}
                 </div>
               </div>
             </div>

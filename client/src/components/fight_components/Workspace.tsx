@@ -11,11 +11,7 @@ import { SocketContext } from "@/SocketContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-//confetti
 import Confetti from "react-confetti";
-import test from "node:test";
-
-// import { url } from "inspector";
 
 const Workspace = ({ problem }: { problem: ProblemType }) => {
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
@@ -48,6 +44,8 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         code: CODE,
         input: input,
       });
+
+      // console.log(response.data);
 
       // compilation error
       if (response.data.compile.stderr) {
@@ -87,7 +85,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
     } catch (err) {
       toast.error("Too many requests");
       return {
-        status: "too many requests",
+        status: "unknown error",
         verdict: false,
       };
     }
@@ -95,6 +93,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
 
   const onRun = async () => {
     setExecuting(true);
+    setResults([]);
     const newResults: { id: number; status: string; verdict: boolean }[] = [];
     const CODE = code;
 
@@ -107,12 +106,11 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         output: testcase.tc_output,
       });
 
-      newResults.push({ id: testcase.tc_id, ...result });
-
-      if (result.verdict === false) break;
+      setResults((results) => [...results, { id: testcase.tc_id, ...result }]);
+      // newResults.push({ id: testcase.tc_id, ...result });
     }
 
-    setResults(newResults);
+    // setResults(newResults);
     setExecuting(false);
   };
 
@@ -138,6 +136,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
     }
 
     setExecuting(false);
+    // console.log(submitResults);
 
     const verdict =
       submitResults.every((result) => result.verdict === true) &&
@@ -150,7 +149,14 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         setConfetti(false);
       }, 5000);
     } else {
-      toast.error("Some test cases failed", { position: "top-center" });
+      const failedResult = submitResults.find(
+        (result) => result.verdict === false
+      );
+      if (failedResult)
+        toast.error(failedResult?.status + " on testcase " + failedResult.id, {
+          position: "top-center",
+        });
+      else toast.error("Some testcases failed", { position: "top-center" });
     }
   };
 
@@ -173,14 +179,14 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
               language={language}
               setLanguage={setLanguage}
             />
-            <TestCases problem={problem} />
+            <TestCases problem={problem} results={results} />
           </Split>
           <div className="h-[50px] mx-20 bg-gray-900 text-white flex items-center justify-center border-t space-x-4">
             <button
               className={`font-medium items-center focus:outline-none inline-flex relative rounded-[0.5rem] px-4 py-1 whitespace-nowrap ${
                 executing
                   ? "text-gray-400 cursor-not-allowed bg-gray-800"
-                  : "bg-dark-fill-3"
+                  : "bg-dark-fill-3 hover:bg-gray-800"
               }`}
               onClick={onRun}
               disabled={executing}
@@ -188,10 +194,10 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
               Run
             </button>
             <button
-              className={`font-medium items-center focus:outline-none inline-flex bg-green-700 relative rounded-[0.5rem] px-4 py-1 whitespace-nowrap ${
+              className={`font-medium items-center focus:outline-none inline-flex relative rounded-[0.5rem] px-4 py-1 whitespace-nowrap ${
                 executing
                   ? "text-gray-400 cursor-not-allowed bg-green-900"
-                  : "bg-green-700"
+                  : "bg-green-700 hover:bg-green-800"
               }`}
               onClick={onSubmit}
               disabled={executing}
