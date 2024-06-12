@@ -1,10 +1,11 @@
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import withTM from 'next-transpile-modules';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig = withTM([])({
   experimental: {
     appDir: true,
   },
@@ -12,6 +13,6 @@ const nextConfig = {
     config.resolve.alias['@'] = join(__dirname, 'src');
     return config;
   },
-};
+});
 
 export default nextConfig;
