@@ -90,6 +90,9 @@ io.on('connection', (socket) => {
     socket.on('codeShare', (data) =>{
         io.to(data.to).emit("codeShare", data.code)
     })
+    socket.on('results', (data) =>{
+        io.to(data.to).emit("results", data.results)
+    })
 })
 
 

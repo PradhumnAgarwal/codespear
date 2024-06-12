@@ -14,14 +14,17 @@ import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 
 const Workspace = ({ problem }: { problem: ProblemType }) => {
+  const { codeShare, oppResults, resultsFunc } = useContext(SocketContext);
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
+  const [confetti, setConfetti] = useState<boolean>(false);
   const [language, setLanguage] = useState<string>("javascript");
-  const { codeShare, oppCode } = useContext(SocketContext);
   const [executing, setExecuting] = useState<boolean>(false);
   const [results, setResults] = useState<
     { id: number; status: string; verdict: boolean }[]
   >([]);
-  const [confetti, setConfetti] = useState<boolean>(false);
+  const [submitResults, setSubmitResults] = useState<
+    { id: number; status: string; verdict: boolean }[]
+  >([]);
 
   useEffect(() => {
     codeShare(code);
@@ -119,7 +122,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
 
     setExecuting(true);
 
-    const submitResults: { id: number; status: string; verdict: boolean }[] =
+    const newSubmitResults: { id: number; status: string; verdict: boolean }[] =
       [];
     const CODE = code;
 
@@ -130,13 +133,15 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         output: testcase.tc_output,
       });
 
-      submitResults.push({ id: testcase.tc_id, ...result });
+      setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
+      // newSubmitResults.push({ id: testcase.tc_id, ...result });
 
       if (result.verdict === false) break;
     }
 
+    resultsFunc(submitResults);
     setExecuting(false);
-    // console.log(submitResults);
+    // console.log(newSubmitResults);
 
     const verdict =
       submitResults.every((result) => result.verdict === true) &&

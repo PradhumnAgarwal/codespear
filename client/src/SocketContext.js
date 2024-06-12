@@ -6,8 +6,7 @@ import { io } from "socket.io-client";
 import Peer from "simple-peer";
 
 const SocketContext = createContext();
-// const socket = io('http://localhost:5000/');
-// const socket = io('https://webrtc-r6gz.onrender.com/');
+
 const socket = io("https://codespear-1qu9.onrender.com");
 
 function cypher(str) {
@@ -32,9 +31,10 @@ const ContextProvider = ({ children }) => {
   const [me, setMe] = useState("");
   const [call, setCall] = useState({});
   const [name, setName] = useState("");
-  const [oppCode, setOppCode] = useState("");
   const [callEnded, setCallEnded] = useState(false);
   const [callAccepted, setCallAccepted] = useState(false);
+  const [oppCode, setOppCode] = useState("");
+  const [oppResults, setOppResults] = useState();
 
   const myVideo = useRef();
   const userVideo = useRef();
@@ -62,6 +62,9 @@ const ContextProvider = ({ children }) => {
       setOppCode(cypher(code));
       // console.log(code);
     });
+    socket.on("results", (results) => {
+      setOppResults(results);
+    });
   }, []);
 
   const answerCall = () => {
@@ -84,6 +87,9 @@ const ContextProvider = ({ children }) => {
   const codeShare = (code) => {
     socket.emit("codeShare", { code, to: call.from });
     // console.log(code);
+  };
+  const resultsFunc = (results) => {
+    socket.emit("results", { results, to: call.from });
   };
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
@@ -134,6 +140,8 @@ const ContextProvider = ({ children }) => {
         answerCall,
         codeShare,
         oppCode,
+        oppResults,
+        resultsFunc
       }}
     >
       {children}
