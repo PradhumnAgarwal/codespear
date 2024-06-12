@@ -1,4 +1,4 @@
-import { ContextProvider } from "@/SocketContext";
+import { ContextProvider } from "../../SocketContext";
 
 export default function Layout({
   children,
