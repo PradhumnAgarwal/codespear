@@ -4,7 +4,7 @@ import { UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 
-export const LandingNavbar = () => {
+const LandingNavbar = () => {
 
   return (
     <nav className="p-4 bg-transparent flex items-center justify-between">
@@ -28,3 +28,5 @@ export const LandingNavbar = () => {
     </nav>
   );
 };
+
+export default LandingNavbar

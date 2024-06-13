@@ -3,7 +3,7 @@
 import TypewriterComponent from "typewriter-effect";
 import Link from "next/link";
 
-export const LandingHero = () => {
+const LandingHero = () => {
   return (
     <>
       <div className="absolute w-[50%] inset-0 gradient-01 opacity-15" />
@@ -49,3 +49,5 @@ export const LandingHero = () => {
     </>
   );
 };
+
+export default LandingHero
