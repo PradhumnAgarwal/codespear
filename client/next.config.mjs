@@ -1,18 +1,11 @@
-import { join, dirname } from 'path';
-import { fileURLToPath } from 'url';
-import withTM from 'next-transpile-modules';
+const path = require('path');
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-/** @type {import('next').NextConfig} */
-const nextConfig = withTM([])({
+module.exports = {
   experimental: {
     appDir: true,
   },
   webpack: (config) => {
-    config.resolve.alias['@'] = join(__dirname, 'src');
+    config.resolve.alias['@'] = path.resolve(__dirname, 'src');
     return config;
   },
-});
-
-export default nextConfig;
+};
