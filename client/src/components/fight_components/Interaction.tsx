@@ -17,8 +17,12 @@ function Interaction() {
   return (
     <div className=" bg-gray-800  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col space-y-2">
       <div className="h-10">Timer</div>
-      <div className="h-[35%] min-h-36" style={{ filter: "blur(4px)" }}>
-        {loaded ? (
+      <div className="h-[35%] min-h-36 relative">
+        
+        {     
+        loaded ? (
+          <div className="overlay">
+            {/* <div style={{pointerEvents:'none', opacity:0}}> */}
           <Editor
             options={{
               minimap: {
@@ -31,6 +35,8 @@ function Interaction() {
             language={language}
             value={oppCode || ""}
           />
+          {/* </div> */}
+          </div>
         ) : (
           <div className="h-full flex justify-center items-center">
             Loading Editor...
