@@ -22,13 +22,13 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
   const [results, setResults] = useState<
     { id: number; status: string; verdict: boolean }[]
   >([]);
-  const [submitResults, setSubmitResults] = useState<
-    { id: number; status: string; verdict: boolean }[]
-  >([]);
+  // const [submitResults, setSubmitResults] = useState<
+  //   { id: number; status: string; verdict: boolean }[]
+  // >([]);
 
   useEffect(() => {
     codeShare(code);
-    // console.log(oppCode);
+    console.log(oppResults);
   }, [code]);
 
   const execution = async ({
@@ -133,19 +133,22 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         output: testcase.tc_output,
       });
 
-      setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
-      // newSubmitResults.push({ id: testcase.tc_id, ...result });
+      // setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
+      newSubmitResults.push({ id: testcase.tc_id, ...result });
 
       if (result.verdict === false) break;
     }
 
-    resultsFunc(submitResults);
+    resultsFunc(newSubmitResults);
     setExecuting(false);
     // console.log(newSubmitResults);
 
     const verdict =
-      submitResults.every((result) => result.verdict === true) &&
-      submitResults.length === problem.testcases.length;
+    newSubmitResults.every((result) => result.verdict === true) &&
+    newSubmitResults.length === problem.testcases.length;
+    // const verdict =
+    //   submitResults.every((result) => result.verdict === true) &&
+    //   submitResults.length === problem.testcases.length;
 
     if (verdict) {
       toast.success("All test cases passed!", { position: "top-center" });
@@ -154,7 +157,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         setConfetti(false);
       }, 5000);
     } else {
-      const failedResult = submitResults.find(
+      const failedResult = newSubmitResults.find(
         (result) => result.verdict === false
       );
       if (failedResult)
