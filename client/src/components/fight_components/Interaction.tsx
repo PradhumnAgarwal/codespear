@@ -8,8 +8,15 @@ import { useClerk } from "@clerk/clerk-react";
 function Interaction() {
   // opponent language, submission status
 
-  const { name, call, userVideoFight, myVideoFight, leaveCall, oppCode } =
-    useContext(SocketContext);
+  const {
+    name,
+    call,
+    userVideoFight,
+    myVideoFight,
+    leaveCall,
+    oppCode,
+    oppResults,
+  } = useContext(SocketContext);
 
   const { loaded } = useClerk();
   const language = "cpp";
@@ -18,24 +25,22 @@ function Interaction() {
     <div className=" bg-gray-800  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col space-y-2">
       <div className="h-10">Timer</div>
       <div className="h-[35%] min-h-36 relative">
-        
-        {     
-        loaded ? (
+        {loaded ? (
           <div className="overlay">
             {/* <div style={{pointerEvents:'none', opacity:0}}> */}
-          <Editor
-            options={{
-              minimap: {
-                enabled: false,
-              },
-              domReadOnly: true,
-              readOnly: true,
-            }}
-            theme="vs-dark"
-            language={language}
-            value={oppCode || ""}
-          />
-          {/* </div> */}
+            <Editor
+              options={{
+                minimap: {
+                  enabled: false,
+                },
+                domReadOnly: true,
+                readOnly: true,
+              }}
+              theme="vs-dark"
+              language={language}
+              value={oppCode || ""}
+            />
+            {/* </div> */}
           </div>
         ) : (
           <div className="h-full flex justify-center items-center">
@@ -43,7 +48,10 @@ function Interaction() {
           </div>
         )}
       </div>
-      <div className="h-[25%] min-h-25 bg-[rgb(50,50,50)]">Public Log</div>
+      <div className="h-[25%] min-h-25 bg-[rgb(50,50,50)]">
+        Public Log
+        <p>{oppResults && oppResults.length}</p>
+      </div>
       <div className="flex h-">
         <div className=" w-[50%]">
           <video

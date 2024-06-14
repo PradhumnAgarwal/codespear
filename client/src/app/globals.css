@@ -32,7 +32,7 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-.view-line{
+.overlay >section >div>div>div>div>div{
   pointer-events: none;
 }
 .overlay {

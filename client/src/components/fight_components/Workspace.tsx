@@ -28,7 +28,6 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
 
   useEffect(() => {
     codeShare(code);
-    console.log(oppResults);
   }, [code]);
 
   const execution = async ({
@@ -134,9 +133,9 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
       });
 
       // setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
-      newSubmitResults.push({ id: testcase.tc_id, ...result });
-
+      
       if (result.verdict === false) break;
+      newSubmitResults.push({ id: testcase.tc_id, ...result });
     }
 
     resultsFunc(newSubmitResults);
