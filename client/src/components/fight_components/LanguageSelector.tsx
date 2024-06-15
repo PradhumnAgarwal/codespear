@@ -22,7 +22,7 @@ const LanguageSelector = ({ language, onSelect }: LanguageSelectorProps) => {
   };
 
   return (
-    <div className="relative h-10 flex justify-between items-center px-4">
+    <div className="relative h-10 flex justify-between items-center px-4 bg-dark-layer-2">
       <button
         className="flex items-center justify-between space-x-1"
         onClick={handleButtonClick}

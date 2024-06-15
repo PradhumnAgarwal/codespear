@@ -3,8 +3,8 @@ import { ProblemType } from "@/utils/types/problem";
 const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
   return (
     <div className="">
-      <div className="flex h-11 w-full items-center pt-2 bg-dark-layer-2 text-white overflow-x-hidden">
-        <div className="bg-dark-layer-1 rounded-t-[5px] px-5 py-[10px] text-xs cursor-pointer">
+      <div className="flex h-10 w-full items-center pt-2 pl-1 bg-dark-layer-2 text-white overflow-x-hidden">
+        <div className="bg-dark-layer-1 rounded-t-[5px] px-5 py-[8px] text-xs cursor-pointer">
           Description
         </div>
       </div>
@@ -89,7 +89,8 @@ const ProblemDescription = ({ problem }: { problem: ProblemType }) => {
                         <br />
                         {example.tc_explanation && (
                           <>
-                            <strong>Explanation:</strong> {example.tc_explanation}
+                            <strong>Explanation:</strong>{" "}
+                            {example.tc_explanation}
                           </>
                         )}
                       </pre>

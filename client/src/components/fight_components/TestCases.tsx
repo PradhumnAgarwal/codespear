@@ -54,8 +54,19 @@ const TestCases = ({
                       <FaCircleXmark className="absolute bottom-5 right-[-5px] text-red-600" />
                     )}
                   {results.length > index &&
-                    results[index].status ===
-                      ("runtime error" || "limit execeeded") && (
+                    results[index].status === "compilation error" && (
+                      <FaCircleExclamation className="absolute bottom-5 right-[-5px] text-yellow-600" />
+                    )}
+                  {results.length > index &&
+                    results[index].status === "runtime error" && (
+                      <FaCircleExclamation className="absolute bottom-5 right-[-5px] text-yellow-600" />
+                    )}
+                  {results.length > index &&
+                    results[index].status === "limit exceeded" && (
+                      <FaCircleExclamation className="absolute bottom-5 right-[-5px] text-yellow-600" />
+                    )}
+                  {results.length > index &&
+                    results[index].status === "unknown error" && (
                       <FaCircleExclamation className="absolute bottom-5 right-[-5px] text-yellow-600" />
                     )}
                 </div>

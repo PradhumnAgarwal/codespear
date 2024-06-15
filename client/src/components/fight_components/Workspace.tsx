@@ -123,6 +123,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
 
     const newSubmitResults: { id: number; status: string; verdict: boolean }[] =
       [];
+    let status = "";
     const CODE = code;
 
     for (const testcase of problem.testcases) {
@@ -133,8 +134,11 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
       });
 
       // setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
-      
-      if (result.verdict === false) break;
+
+      if (result.verdict === false) {
+        status = result.status;
+        break;
+      }
       newSubmitResults.push({ id: testcase.tc_id, ...result });
     }
 
@@ -143,11 +147,8 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
     // console.log(newSubmitResults);
 
     const verdict =
-    newSubmitResults.every((result) => result.verdict === true) &&
-    newSubmitResults.length === problem.testcases.length;
-    // const verdict =
-    //   submitResults.every((result) => result.verdict === true) &&
-    //   submitResults.length === problem.testcases.length;
+      newSubmitResults.every((result) => result.verdict === true) &&
+      newSubmitResults.length === problem.testcases.length;
 
     if (verdict) {
       toast.success("All test cases passed!", { position: "top-center" });
@@ -156,11 +157,8 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
         setConfetti(false);
       }, 5000);
     } else {
-      const failedResult = newSubmitResults.find(
-        (result) => result.verdict === false
-      );
-      if (failedResult)
-        toast.error(failedResult?.status + " on testcase " + failedResult.id, {
+      if (status.length)
+        toast.error(status + " on testcase " + newSubmitResults.length + 1, {
           position: "top-center",
         });
       else toast.error("Some testcases failed", { position: "top-center" });
@@ -178,7 +176,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
             className="h-[calc(100vh-50px)]"
             direction="vertical"
             sizes={[60, 40]}
-            minSize={60}
+            minSize={100}
           >
             <CodeEditor
               code={code}

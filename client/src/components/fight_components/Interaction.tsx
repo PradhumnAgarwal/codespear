@@ -22,9 +22,9 @@ function Interaction() {
   const language = "cpp";
 
   return (
-    <div className=" bg-gray-800  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col space-y-2">
+    <div className="bg-dark-layer-2  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col space-y-2">
       <div className="h-10">Timer</div>
-      <div className="h-[35%] min-h-36 relative">
+      <div className="h-[35%] min-h-36 relative mx-1 border-gray-950 border-2">
         {loaded ? (
           <div className="overlay">
             {/* <div style={{pointerEvents:'none', opacity:0}}> */}
@@ -48,19 +48,37 @@ function Interaction() {
           </div>
         )}
       </div>
-      <div className="h-[25%] min-h-25 bg-[rgb(50,50,50)]">
-        Public Log
-        <p>{oppResults && oppResults.length}</p>
+      <div className="mx-2 relative">
+        <div className="absolute w-full flex justify-center top-12 z-10">
+          <img src="logo_01.png" className="h-8" />
+        </div>
+        <div className="text-center p-1 bg-[rgb(26,26,26)] text-gray-400 rounded-t-xl">
+          Submission Results
+        </div>
+        <div className="h-16 flex relative bg-[rgb(31,31,31)]">
+          <div className=" flex-1 text-4xl flex items-center justify-center">
+            3
+          </div>
+          <div className=" flex-1 text-4xl flex items-center justify-center">
+            <p>{oppResults ? oppResults.length : 0}</p>
+          </div>
+        </div>
+        <div className="text-center p-1 bg-[rgb(26,26,26)] text-gray-400 text-sm rounded-b-xl">
+          testcases passed
+        </div>
       </div>
-      <div className="flex h-">
+      <div className="flex mx-2 space-x-1">
         <div className=" w-[50%]">
           <video
+            className="border-2 border-gray-950"
             style={{ width: "100%" }}
             muted
             ref={myVideoFight || null}
             autoPlay
           />
-          <div className=" w-full text-center">{name || "You"}</div>
+          <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
+            {name || "You"}
+          </div>
         </div>
         <div className=" w-[50%]">
           <video
@@ -69,14 +87,14 @@ function Interaction() {
             ref={userVideoFight || null}
             autoPlay
           />
-          <div className=" w-full text-center">
+          <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
             {call.callerName || "Opponent"}
           </div>
         </div>
       </div>
 
       <div
-        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 rounded text-center cursor-pointer m-4"
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 rounded text-center cursor-pointer mx-6"
         onClick={leaveCall}
       >
         Leave
