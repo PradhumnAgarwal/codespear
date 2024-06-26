@@ -13,7 +13,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Confetti from "react-confetti";
 
-const Workspace = ({ problem }: { problem: ProblemType }) => {
+const Workspace = ({
+  problem,
+  setMyResults,
+}: {
+  problem: ProblemType;
+  setMyResults: (arg0: number) => void;
+}) => {
   const { codeShare, oppResults, resultsFunc } = useContext(SocketContext);
   const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
   const [confetti, setConfetti] = useState<boolean>(false);
@@ -143,6 +149,9 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
     }
 
     resultsFunc(newSubmitResults);
+    setMyResults(
+      newSubmitResults.filter((result) => result.verdict === true).length
+    );
     setExecuting(false);
     // console.log(newSubmitResults);
 
@@ -158,7 +167,7 @@ const Workspace = ({ problem }: { problem: ProblemType }) => {
       }, 5000);
     } else {
       if (status.length)
-        toast.error(status + " on testcase " + newSubmitResults.length + 1, {
+        toast.error(status + " on testcase " + (newSubmitResults.length + 1), {
           position: "top-center",
         });
       else toast.error("Some testcases failed", { position: "top-center" });
