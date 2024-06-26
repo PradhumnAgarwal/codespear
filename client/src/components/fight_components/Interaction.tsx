@@ -70,7 +70,6 @@ function Interaction() {
       <div className="flex mx-2 space-x-1">
         <div className=" w-[50%]">
           <video
-            className="border-2 border-gray-950"
             style={{ width: "100%" }}
             muted
             ref={myVideoFight || null}
@@ -83,7 +82,6 @@ function Interaction() {
         <div className=" w-[50%]">
           <video
             style={{ width: "100%" }}
-            muted
             ref={userVideoFight || null}
             autoPlay
           />

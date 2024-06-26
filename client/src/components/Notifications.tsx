@@ -9,12 +9,12 @@ const Notifications = () => {
     <>
       {call.isReceivingCall && !callAccepted && (
         <div style={{ display: "flex", justifyContent: "space-around", margin:'10px' }}>
-          <h1>{call.callerName || call.from || "Someone"} wants to join!</h1>
+          <h1>{call.callerName || call.from || "Someone"} wants to join the contest!</h1>
           <div
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center cursor-pointer"
             onClick={answerCall}
           >
-            Answer
+            Accept
           </div>
         </div>
       )}

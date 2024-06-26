@@ -1,21 +1,28 @@
 "use client";
-import { SocketContext } from '@/SocketContext';
-import Image from 'next/image'
-import React, { useContext } from 'react'
-import Options from './Options';
-import Notifications from './Notifications';
-import VideoPlayer from './VideoPlayer';
+import { SocketContext } from "@/SocketContext";
+import Image from "next/image";
+import React, { useContext, useEffect } from "react";
+import Options from "./Options";
+import Notifications from "./Notifications";
+import toast from "react-hot-toast";
 
 function CallScreen() {
-const { name, call, userVideo, myVideo} = useContext(SocketContext);
+  const { name, call, userVideo, myVideo, me } = useContext(SocketContext);
+
   return (
     <>
-      <div className="text-3xl w-full text-center">Battle Page</div>
+      {/* <div className="text-3xl w-full text-center">Battle Page</div> */}
       <div className="flex">
         <div className=" h-full w-[40%]">
           <div>
             <div>
-              <video playsInline muted ref={myVideo || null} autoPlay />
+              <video
+                playsInline
+                muted
+                ref={myVideo || null}
+                autoPlay
+                style={{ width: "100%" }}
+              />
             </div>
             <div
               className="text-3xl text-white text-center"
@@ -37,12 +44,9 @@ const { name, call, userVideo, myVideo} = useContext(SocketContext);
         </div>
         <div className=" h-full w-[40%] ">
           <div>
-            {/* Video player designing div */}
             <div>
-              {/* <VideoPlayer /> */}
               <video
                 playsInline
-                muted
                 ref={userVideo || null}
                 autoPlay
                 style={{ width: "100%" }}
@@ -52,7 +56,7 @@ const { name, call, userVideo, myVideo} = useContext(SocketContext);
               className="text-3xl text-white text-center"
               style={{ width: "100%" }}
             >
-              {call.callerName || 'Opponent'}
+              {call.callerName || "Opponent"}
             </div>
           </div>
         </div>
@@ -61,7 +65,7 @@ const { name, call, userVideo, myVideo} = useContext(SocketContext);
         <Notifications />
       </Options>
     </>
-  )
+  );
 }
 
-export default CallScreen
+export default CallScreen;
