@@ -59,11 +59,11 @@ function Interaction({ myResults }: { myResults: number }) {
           <div className="h-16 flex relative bg-[rgb(31,31,31)]">
             <div className=" flex-1 flex flex-col items-center justify-center">
               <p className="text-4xl">{myResults}</p>
-              {/* <p className="text-xs">{name || "You"}</p> */}
+              <p className="text-xs">You</p>
             </div>
             <div className=" flex-1 text-4xl flex flex-col items-center justify-center">
               <p>{oppResults ? oppResults.length : 0}</p>
-              {/* <p className="text-xs">{call.callerName || "Opponent"}</p> */}
+              <p className="text-xs">Opponent</p>
             </div>
           </div>
           <div className="text-center p-1 bg-[rgb(26,26,26)] text-gray-400 text-sm rounded-b-xl">
