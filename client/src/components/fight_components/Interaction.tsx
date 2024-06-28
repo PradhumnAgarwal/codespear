@@ -75,9 +75,9 @@ function Interaction() {
             ref={myVideoFight || null}
             autoPlay
           />
-          <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
+          {/* <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
             {name || "You"}
-          </div>
+          </div> */}
         </div>
         <div className=" w-[50%]">
           <video
@@ -85,9 +85,9 @@ function Interaction() {
             ref={userVideoFight || null}
             autoPlay
           />
-          <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
+          {/* <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
             {call.callerName || "Opponent"}
-          </div>
+          </div> */}
         </div>
       </div>
 

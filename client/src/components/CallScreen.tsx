@@ -28,7 +28,7 @@ function CallScreen() {
               className="text-3xl text-white text-center"
               style={{ width: "100%" }}
             >
-              {name || "You"}
+              {/* {name || "You"} */}
             </div>{" "}
             <br />
           </div>
@@ -56,7 +56,7 @@ function CallScreen() {
               className="text-3xl text-white text-center"
               style={{ width: "100%" }}
             >
-              {call.callerName || "Opponent"}
+              {/* {call.callerName || "Opponent"} */}
             </div>
           </div>
         </div>
