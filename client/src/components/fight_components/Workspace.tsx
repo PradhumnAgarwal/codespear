@@ -36,6 +36,12 @@ const Workspace = ({
     codeShare(code);
   }, [code]);
 
+  const checkOutput = (output: string, expectedOutput: string) => {
+    output.replace(/\n/g, " ");
+    expectedOutput.replace(/\n/g, " ");
+    return output.trim() === expectedOutput.trim();
+  };
+
   const execution = async ({
     CODE,
     input,
@@ -52,16 +58,15 @@ const Workspace = ({
         code: CODE,
         input: input,
       });
+      console.log(response.data);
 
-      // console.log(response.data);
-
-      // compilation error
-      if (response.data.compile.stderr) {
-        return {
-          status: "compilation error",
-          verdict: false,
-        };
-      }
+      // // compilation error
+      // if (response.data.compile.stderr) {
+      //   return {
+      //     status: "compilation error",
+      //     verdict: false,
+      //   };
+      // }
 
       // runtime error
       if (response.data.run.stderr) {
@@ -79,7 +84,7 @@ const Workspace = ({
         };
       }
 
-      if (response.data.run.stdout === output) {
+      if (checkOutput(response.data.run.stdout, output)) {
         return {
           status: "correct",
           verdict: true,
@@ -91,7 +96,7 @@ const Workspace = ({
         verdict: false,
       };
     } catch (err) {
-      toast.error("Too many requests");
+      toast.error("unknown error");
       return {
         status: "unknown error",
         verdict: false,
