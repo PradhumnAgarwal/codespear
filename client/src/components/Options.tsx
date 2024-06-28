@@ -21,6 +21,10 @@ const Options = ({ children }: { children: React.ReactNode }) => {
   };
   const handleJoinRequest = (e: any) => {
     e.preventDefault();
+    if(!me){
+      toast.error("Still trying to connect to server");
+      return;
+    }
     if(name.length == 0){
       toast.error("Please enter your name first");
       return;
