@@ -34,7 +34,10 @@ function ContestScreen() {
         <Workspace problem={problem} setMyResults={setMyResults} />
       </div>
       <div className="w-[20%] bg-gray-800 text-white">
-        <Interaction myResults={myResults} />
+        <Interaction
+          myResults={myResults}
+          totalTestcases={problem.testcases.length}
+        />
       </div>
     </div>
   );

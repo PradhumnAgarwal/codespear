@@ -1,12 +1,18 @@
 "use client";
-import React, { useContext } from "react";
-import VideoPlayer from "../VideoPlayer";
+import React, { useContext, useEffect, useState } from "react";
 import { SocketContext } from "@/SocketContext";
 import { Editor } from "@monaco-editor/react";
 import { useClerk } from "@clerk/clerk-react";
+import Confetti from "react-confetti";
 
-function Interaction({ myResults }: { myResults: number }) {
-  // opponent language, submission status
+function Interaction({
+  myResults,
+  totalTestcases,
+}: {
+  myResults: number;
+  totalTestcases: number;
+}) {
+  // opponent language
 
   const {
     name,
@@ -20,6 +26,23 @@ function Interaction({ myResults }: { myResults: number }) {
 
   const { loaded } = useClerk();
   const language = "cpp";
+  const [winner, setWinner] = useState<"you" | "opp" | "none">("none");
+  const [confetti, setConfetti] = useState<boolean>(false);
+  const [close, setClose] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (winner === "none") {
+      if (myResults === totalTestcases) {
+        setWinner("you");
+        setConfetti(true);
+        setTimeout(() => {
+          setConfetti(false);
+        }, 5000);
+      } else if (oppResults?.length === totalTestcases) {
+        setWinner("opp");
+      }
+    }
+  }, [myResults, oppResults]);
 
   return (
     <div className="bg-dark-layer-2  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col">
@@ -101,6 +124,47 @@ function Interaction({ myResults }: { myResults: number }) {
           Leave
         </div>
       </div>
+      {confetti && <Confetti />}
+      {winner === "you" && close === false && (
+        <div
+          className="z-20 fixed top-[calc(50%-10rem)] left-[calc(50%-15rem)] h-80 w-[30rem] bg-white rounded-3xl flex flex-col items-center justify-center"
+          style={{ boxShadow: "0px 0px 20px 20px rgba(0,0,0,0.3)" }}
+        >
+          <button
+            className="text-black relative bottom-3 left-52"
+            onClick={() => setClose(true)}
+          >
+            X
+          </button>
+          <span className="text-5xl text-green-700 font-semibold font-sans">
+            You Won!
+          </span>
+          <span className="text-2xl text-gray-800 font-semibold font-sans">
+            Congratulations
+          </span>
+          <img src="confetti.gif" className="h-40" />
+        </div>
+      )}
+      {winner === "opp" && close === false && (
+        <div
+          className="z-20 fixed top-[calc(50%-10rem)] left-[calc(50%-15rem)] h-80 w-[30rem] bg-white rounded-3xl flex flex-col items-center justify-center"
+          style={{ boxShadow: "0px 0px 20px 20px rgba(0,0,0,0.3)" }}
+        >
+          <button
+            className="text-black relative bottom-3 left-52"
+            onClick={() => setClose(true)}
+          >
+            X
+          </button>
+          <span className="text-5xl text-red-800 font-semibold font-sans">
+            You Lost!
+          </span>
+          <span className="text-2xl text-gray-800 font-semibold font-sans">
+            Better luck next time!
+          </span>
+          <img src="sadface.gif" className="h-40" />
+        </div>
+      )}
     </div>
   );
 }

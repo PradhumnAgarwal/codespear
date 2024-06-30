@@ -21,16 +21,12 @@ const Workspace = ({
   setMyResults: (arg0: number) => void;
 }) => {
   const { codeShare, oppResults, resultsFunc } = useContext(SocketContext);
-  const [code, setCode] = useState<string>(CODE_SNIPPETS["javascript"]);
-  const [confetti, setConfetti] = useState<boolean>(false);
-  const [language, setLanguage] = useState<string>("javascript");
+  const [code, setCode] = useState<string>(CODE_SNIPPETS["cpp"]);
+  const [language, setLanguage] = useState<string>("cpp");
   const [executing, setExecuting] = useState<boolean>(false);
   const [results, setResults] = useState<
     { id: number; status: string; verdict: boolean }[]
   >([]);
-  // const [submitResults, setSubmitResults] = useState<
-  //   { id: number; status: string; verdict: boolean }[]
-  // >([]);
 
   useEffect(() => {
     codeShare(code);
@@ -58,7 +54,7 @@ const Workspace = ({
         code: CODE,
         input: input,
       });
-      console.log(response.data);
+      // console.log(response.data);
 
       // // compilation error
       // if (response.data.compile.stderr) {
@@ -128,8 +124,6 @@ const Workspace = ({
   };
 
   const onSubmit = async () => {
-    // other user need to be notified
-
     setExecuting(true);
 
     const newSubmitResults: { id: number; status: string; verdict: boolean }[] =
@@ -143,8 +137,6 @@ const Workspace = ({
         input: testcase.tc_input,
         output: testcase.tc_output,
       });
-
-      // setSubmitResults((submitResults) => [...submitResults, { id: testcase.tc_id, ...result }]);
 
       if (result.verdict === false) {
         status = result.status;
@@ -166,10 +158,6 @@ const Workspace = ({
 
     if (verdict) {
       toast.success("All test cases passed!", { position: "top-center" });
-      setConfetti(true);
-      setTimeout(() => {
-        setConfetti(false);
-      }, 5000);
     } else {
       if (status.length)
         toast.error(status + " on testcase " + (newSubmitResults.length + 1), {
@@ -227,7 +215,6 @@ const Workspace = ({
         </div>
       </Split>
       <ToastContainer />
-      {confetti && <Confetti />}
     </div>
   );
 };
