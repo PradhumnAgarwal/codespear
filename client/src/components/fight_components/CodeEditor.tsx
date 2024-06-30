@@ -19,7 +19,7 @@ const CodeEditor = ({ code, setCode, language }: CodeEditorProps) => {
   };
 
   return (
-    <div className="h-full">
+    <div className="h-full min-h-20">
       {loaded ? (
         <Editor
           options={{
