@@ -11,7 +11,7 @@ import { SocketContext } from "@/SocketContext";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Confetti from "react-confetti";
+import LanguageSelector from "./LanguageSelector";
 
 const Workspace = ({
   problem,
@@ -31,6 +31,10 @@ const Workspace = ({
   useEffect(() => {
     codeShare(code);
   }, [code]);
+
+  useEffect(() => {
+    setCode(CODE_SNIPPETS[language as keyof typeof CODE_SNIPPETS]);
+  }, [language]);
 
   const checkOutput = (output: string, expectedOutput: string) => {
     output.replace(/\n/g, " ");
@@ -174,18 +178,16 @@ const Workspace = ({
           <ProblemDescription problem={problem} />
         </div>
         <div className="flex flex-col relative overflow-x-hidden">
+          <div className="h-10">
+            <LanguageSelector language={language} onSelect={setLanguage} />
+          </div>
           <Split
-            className="h-[calc(100vh-50px)]"
+            className="h-[calc(100vh-50px-2.5rem)]"
             direction="vertical"
             sizes={[60, 40]}
             minSize={100}
           >
-            <CodeEditor
-              code={code}
-              setCode={setCode}
-              language={language}
-              setLanguage={setLanguage}
-            />
+            <CodeEditor code={code} setCode={setCode} language={language} />
             <TestCases problem={problem} results={results} />
           </Split>
           <div className="h-[50px] mx-20 bg-gray-900 text-white flex items-center justify-center border-t space-x-4">
