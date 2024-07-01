@@ -30,6 +30,7 @@ function Interaction({
   const [winner, setWinner] = useState<"you" | "opp" | "none">("none");
   const [confetti, setConfetti] = useState<boolean>(false);
   const [close, setClose] = useState<boolean>(false);
+  const [isMuted, setIsMuted] = useState(false);
 
   useEffect(() => {
     if (winner === "none") {
@@ -44,6 +45,10 @@ function Interaction({
       }
     }
   }, [myResults, oppResults]);
+
+  const handleMute = () => {
+    setIsMuted(!isMuted);
+  };
 
   return (
     <div className="bg-dark-layer-2  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col">
@@ -106,12 +111,19 @@ function Interaction({
               {name || "You"}
             </div> */}
           </div>
-          <div className=" w-[50%]">
+          <div className=" w-[50%] relative">
             <video
               style={{ width: "100%" }}
               ref={userVideoFight || null}
+              muted={isMuted}
               autoPlay
             />
+            <div onClick={handleMute} className=" absolute bottom-1 right-1 cursor-pointer">
+              {/* {isMuted ? "Unmute" : "Mute"} */}
+              <div className="flex items-center justify-center h-8 w-8 p-2" style={{backgroundColor:'#00000099', borderRadius:'5px'}}>
+              <img src={!isMuted? "./volume.png" :"./mute.png"} style={{height:'100%', width:'100%'}}/>
+              </div>
+              </div>
             {/* <div className="w-full text-center text-xs bg-gray-950 text-gray-300">
               {call.callerName || "Opponent"}
             </div> */}
