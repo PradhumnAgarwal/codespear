@@ -177,7 +177,7 @@ const Workspace = ({
         <div>
           <ProblemDescription problem={problem} />
         </div>
-        <div className="flex flex-col relative overflow-x-hidden">
+        <div className="flex flex-col relative overflow-hidden min-w-56">
           <div className="h-10">
             <LanguageSelector language={language} onSelect={setLanguage} />
           </div>

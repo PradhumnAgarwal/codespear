@@ -10,8 +10,6 @@ type CodeEditorProps = {
 };
 
 const CodeEditor = ({ code, setCode, language }: CodeEditorProps) => {
-  // Remaining: reset, fullscreen
-
   const { loaded } = useClerk();
 
   const onMount = (editor: any) => {

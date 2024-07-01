@@ -4,6 +4,7 @@ import { SocketContext } from "@/SocketContext";
 import { Editor } from "@monaco-editor/react";
 import { useClerk } from "@clerk/clerk-react";
 import Confetti from "react-confetti";
+import Timer from "./Timer";
 
 function Interaction({
   myResults,
@@ -46,7 +47,7 @@ function Interaction({
 
   return (
     <div className="bg-dark-layer-2  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col">
-      <div className="h-10">Timer</div>
+      <div className="h-10">{loaded && <Timer />}</div>
       <div className="flex flex-col h-full justify-between">
         <div className="h-[45%] min-h-36 relative mx-1 border-gray-950 border-2">
           {loaded ? (

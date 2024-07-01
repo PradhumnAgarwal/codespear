@@ -10,6 +10,7 @@ interface LanguageSelectorProps {
 }
 
 const LanguageSelector = ({ language, onSelect }: LanguageSelectorProps) => {
+  // TODO: reset button
   const [isDropdownVisible, setDropdownVisible] = useState(false);
 
   const handleButtonClick = () => {
