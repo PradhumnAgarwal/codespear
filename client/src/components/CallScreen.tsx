@@ -47,6 +47,7 @@ function CallScreen() {
             <div>
               <video
                 playsInline
+                muted
                 ref={userVideo || null}
                 autoPlay
                 style={{ width: "100%" }}
