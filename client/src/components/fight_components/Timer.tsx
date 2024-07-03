@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const Timer = () => {
   const [currentState, setCurrentState] = useState("");
-  const [time, setTime] = useState(0);
+  const [time, setTime] = useState(-5000);
 
   const onStart = () => {
     if (currentState === "START") return;

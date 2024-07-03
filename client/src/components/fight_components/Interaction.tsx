@@ -23,6 +23,7 @@ function Interaction({
     leaveCall,
     oppCode,
     oppResults,
+    callAccepted
   } = useContext(SocketContext);
 
   const { loaded } = useClerk();
@@ -52,7 +53,7 @@ function Interaction({
 
   return (
     <div className="bg-dark-layer-2  h-[100vh] overflow-y-auto border-l-4 border-slate-950 flex flex-col">
-      <div className="h-10">{loaded && <Timer />}</div>
+      <div className="h-10">{callAccepted && <Timer />}</div>
       <div className="flex flex-col h-full justify-between">
         <div className="h-[45%] min-h-36 relative mx-1 border-gray-950 border-2">
           {loaded ? (
