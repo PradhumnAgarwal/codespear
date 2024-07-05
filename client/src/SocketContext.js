@@ -29,6 +29,7 @@ function cypher(str) {
 const ContextProvider = ({ children }) => {
   const [stream, setStream] = useState(null);
   const [me, setMe] = useState("");
+  const [opp, setOpp] = useState("");
   const [call, setCall] = useState({});
   const [name, setName] = useState("");
   const [callEnded, setCallEnded] = useState(false);
@@ -86,11 +87,12 @@ const ContextProvider = ({ children }) => {
     connectionRef.current = peer;
   };
   const codeShare = (code) => {
-    socket.emit("codeShare", { code, to: call.from });
-    // console.log(code);
+    if(call.from)  socket.emit("codeShare", { code, to: call.from });
+    else  socket.emit("codeShare", { code, to: opp});
   };
   const resultsFunc = (results) => {
-    socket.emit("results", { results, to: call.from });
+    if(call.from) socket.emit("results", { results, to: call.from });
+    else socket.emit("results", { results, to: opp });
   };
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
@@ -111,6 +113,7 @@ const ContextProvider = ({ children }) => {
 
     socket.on("callaccepted", (signal) => {
       setCallAccepted(true);
+      setOpp(id);
       peer.signal(signal);
     });
 
